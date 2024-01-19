@@ -3,7 +3,7 @@ const fs = require('fs');
 
 const outputFile = path.join(__dirname, 'project-dist/bundle.css');
 const srcFolder = path.join(__dirname, 'styles');
-function mergeCss(srcFolder, outputFile) {
+function mergeCSS(srcFolder, outputFile) {
   const cssFiles = [];
   let curCSSFile = 0;
   function prepareBundle() {
@@ -38,7 +38,7 @@ function mergeCss(srcFolder, outputFile) {
     prepareBundle();
   });
 }
-mergeCss(srcFolder, outputFile);
+mergeCSS(srcFolder, outputFile);
 module.exports = {
-  mergeCss,
+  mergeCSS,
 };
