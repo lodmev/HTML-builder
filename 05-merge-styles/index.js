@@ -1,15 +1,17 @@
 const path = require('path');
 const fs = require('fs');
 
-const outputFile = path.join(__dirname, 'project-dist/bundle.css');
-const srcFolder = path.join(__dirname, 'styles');
-function mergeCSS(srcFolder, outputFile) {
+function mergeCSS(srcFolder, outputFolder, outputFileName) {
   const cssFiles = [];
   let curCSSFile = 0;
   function prepareBundle() {
-    fs.open(outputFile, 'w', (err, fd) => {
+    fs.mkdir(outputFolder, { recursive: true }, (err) => {
       if (err) throw err;
-      writeBundle(fd);
+      const outputFile = path.join(outputFolder, outputFileName);
+      fs.open(outputFile, 'w', (err, fd) => {
+        if (err) throw err;
+        writeBundle(fd);
+      });
     });
   }
   function writeBundle(bundleFileDesc) {
@@ -35,10 +37,15 @@ function mergeCSS(srcFolder, outputFile) {
       }
       cssFiles.push(path.join(srcFolder, file.name));
     }
-    prepareBundle();
   });
+  prepareBundle();
 }
-mergeCSS(srcFolder, outputFile);
+if (require.main === module) {
+  const outputFolder = path.join(__dirname, 'project-dist');
+  const outFile = 'bundle.css';
+  const srcDir = path.join(__dirname, 'styles');
+  mergeCSS(srcDir, outputFolder, outFile);
+}
 module.exports = {
   mergeCSS,
 };

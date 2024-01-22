@@ -12,7 +12,6 @@ function buildProject() {
   const componentsExt = 'html';
   const distFolder = path.join(__dirname, 'project-dist');
   const outputHTML = path.join(distFolder, 'index.html');
-  const outputCSS = path.join(distFolder, 'style.css');
   const outputAssets = path.join(distFolder, 'assets');
 
   function createHTML(htmlTemplate, outputHTML) {
@@ -69,7 +68,7 @@ function buildProject() {
   mkdir.then(() => {
     createHTML(htmlTemplate, outputHTML);
     makeDirCopy(assetsInputFolder, outputAssets);
-    mergeCSS(stylesInputFolder, outputCSS);
+    mergeCSS(stylesInputFolder, distFolder, 'style.css');
   });
 }
 

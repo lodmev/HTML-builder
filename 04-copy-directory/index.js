@@ -1,9 +1,6 @@
 const path = require('path');
 const fs = require('fs');
 
-const source = path.join(__dirname, 'files');
-const dest = path.join(__dirname, 'files-copy');
-
 function makeDirCopy(source, dest) {
   fs.mkdir(dest, { recursive: true }, (err) => {
     if (err) throw err;
@@ -25,7 +22,11 @@ function makeDirCopy(source, dest) {
     });
   });
 }
-makeDirCopy(source, dest);
+if (require.main === module) {
+  const source = path.join(__dirname, 'files');
+  const dest = path.join(__dirname, 'files-copy');
+  makeDirCopy(source, dest);
+}
 module.exports = {
   makeDirCopy,
 };
