@@ -25,7 +25,9 @@ function makeDirCopy(source, dest) {
 if (require.main === module) {
   const source = path.join(__dirname, 'files');
   const dest = path.join(__dirname, 'files-copy');
-  makeDirCopy(source, dest);
+  fs.promises.rm(dest, { recursive: true, force: true }).then(() => {
+    makeDirCopy(source, dest);
+  });
 }
 module.exports = {
   makeDirCopy,

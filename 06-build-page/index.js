@@ -64,11 +64,13 @@ function buildProject() {
         loadComponents(foundComponents);
       });
   }
-  const mkdir = fs.promises.mkdir(distFolder, { recursive: true });
-  mkdir.then(() => {
-    createHTML(htmlTemplate, outputHTML);
-    makeDirCopy(assetsInputFolder, outputAssets);
-    mergeCSS(stylesInputFolder, distFolder, 'style.css');
+  fs.promises.rm(distFolder, { recursive: true, force: true }).then(() => {
+    const mkdir = fs.promises.mkdir(distFolder, { recursive: true });
+    mkdir.then(() => {
+      createHTML(htmlTemplate, outputHTML);
+      makeDirCopy(assetsInputFolder, outputAssets);
+      mergeCSS(stylesInputFolder, distFolder, 'style.css');
+    });
   });
 }
 
